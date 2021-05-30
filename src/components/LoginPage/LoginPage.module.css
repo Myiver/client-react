@@ -1,0 +1,14 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  justify-content: center;
+}
+
+.row form > * {
+  margin-bottom: 16px;
+}
