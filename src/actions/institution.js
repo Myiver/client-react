@@ -7,13 +7,15 @@ export const login = formData => {
   return async dispatch => {
     try {
       const { login, password } = formData
+      login = login.toLowerCase()
+      
       const response = await axios.post(`${DB_Link}/auth/login`, { login, password })
 
       localStorage.setItem("authToken", response.data.token)
 
       return dispatch(setInstitutionAction(response.data))
-    } catch ({ message }) {
-      alert("Login error: ", message)
+    } catch (error) {
+      return
     }
   }
 }
@@ -21,7 +23,7 @@ export const login = formData => {
 export const verifyToken = () => {
   return async dispatch => {
     try {
-      const response = await axios.get(`${DB_Link}/auth/verify`, {
+      const response = await axios.get(`${DB_Link}/auth/verifyToken`, {
         headers: {
           "authorization": `Bearer ${localStorage.getItem("authToken")}`
         }
@@ -30,8 +32,7 @@ export const verifyToken = () => {
       localStorage.setItem("authToken", response.data.token)
 
       return dispatch(setInstitutionAction(response.data))
-    } catch ({ message }) {
-      alert("Verify error: ", message)
+    } catch (error) {
       localStorage.removeItem("authToken")
     }
   }

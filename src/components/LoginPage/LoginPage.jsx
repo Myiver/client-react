@@ -10,6 +10,7 @@ import s from "./LoginPage.module.sass"
 
 export default function LoginPage(props) {
   const dispatch = useDispatch()
+
   const handleSubmit = formData => {
     dispatch(login(formData))
   }
