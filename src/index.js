@@ -3,7 +3,6 @@ import ReactDOM from "react-dom"
 
 import App from "./root/App.jsx"
 
-import "bootstrap/dist/css/bootstrap-grid.min.css"
-import "./index.css"
+import "./index.sass"
 
 ReactDOM.render(<App />, document.getElementById("react-root"))

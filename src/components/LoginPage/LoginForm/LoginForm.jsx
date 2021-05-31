@@ -20,21 +20,18 @@ export default function LoginForm(props) {
   })
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+      validateOnBlur={false}
+      validateOnChange={false}>
       {formik => {
         return (
           <Form>
             <LoginField name="login" label="Մուտքանուն" />
             <PasswordField name="password" label="Գաղտնաբառ" />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={
-                formik.values.password.length < 6 ||
-                (formik.isValid === false && Object.keys(formik.touched).length > 0)
-              }>
+            <Button type="submit" fullWidth variant="contained" color="primary">
               Մուտք
             </Button>
           </Form>

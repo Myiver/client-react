@@ -8,7 +8,6 @@ export default function LoginField(props) {
   return (
     <Field name={name}>
       {({ field, form }) => {
-        console.log(form)
         return (
           <FormControl variant="outlined" fullWidth>
             <InputLabel htmlFor={name} error={form.errors[name] ? true : false}>
