@@ -1,0 +1,2 @@
+export const SET_INSTITUTION = "SET_INSTITUTION"
+export const LOGOUT = "LOGOUT"

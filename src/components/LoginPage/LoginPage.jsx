@@ -1,14 +1,17 @@
 import { Grid } from "@material-ui/core"
+import { useDispatch } from "react-redux"
 
 import LoginForm from "./LoginForm/LoginForm"
 import Logo from "../../assets/images/logo.png"
 import Copyright from "../shared/Copyright/Copyright"
+import { login } from "../../actions"
 
 import s from "./LoginPage.module.sass"
 
 export default function LoginPage(props) {
-  const handleSubmit = values => {
-    console.log("Form data: ", values)
+  const dispatch = useDispatch()
+  const handleSubmit = formData => {
+    dispatch(login(formData))
   }
 
   return (
