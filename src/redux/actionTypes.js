@@ -5,6 +5,3 @@ export const LOGOUT = "LOGOUT"
 // ERRORS
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR"
 export const REMOVE_LOGIN_ERROR = "REMOVE_LOGIN_ERROR"
-
-// LOADING
-export const SET_LOADING = "SET_LOADING"
