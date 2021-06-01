@@ -16,17 +16,14 @@ export default function App(props) {
   const isAuth = useSelector(state => state.institution.isAuth)
 
   useEffect(() => {
-    if (localStorage.getItem("authToken") && isAuth === false) {
-      return dispatch(verifyToken())
-    }
-
     if (isAuth) {
       history.push("/")
-      return setLoading(false)
+    } else if (localStorage.getItem("authToken") && isAuth === false) {
+      dispatch(verifyToken(setLoading))
+    } else {
+      setLoading(false)
+      history.push("/login")
     }
-
-    history.push("/login")
-    return setLoading(false)
   }, [dispatch, history, isAuth])
 
   return (

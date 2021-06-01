@@ -1,7 +1,7 @@
 import axios from "axios"
 
 import { DB_Link } from "../configs"
-import { setInstitutionAction, setLoginErrorAction, removeLoginErrorAction } from "../redux/actions"
+import { setInstitutionAction, setLoginErrorAction, logoutAction, removeLoginErrorAction, setLoadingAction } from "../redux/actions"
 
 export const login = formData => {
   return async dispatch => {
@@ -25,7 +25,7 @@ export const login = formData => {
   }
 }
 
-export const verifyToken = () => {
+export const verifyToken = setLoading => {
   return async dispatch => {
     try {
       const response = await axios.get(`${DB_Link}/auth/verifyToken`, {
@@ -34,9 +34,15 @@ export const verifyToken = () => {
         }
       })
 
+      if (response.data.error) {
+        setLoading(false)
+        return dispatch(logoutAction())
+      }
+
       localStorage.setItem("authToken", response.data.token)
 
-      return dispatch(setInstitutionAction(response.data))
+      dispatch(setInstitutionAction(response.data))
+      return dispatch(setLoadingAction(false))
     } catch (error) {
       localStorage.removeItem("authToken")
     }

@@ -18,7 +18,6 @@ export const institutionReducer = (state = initialState, action) => {
 
     case LOGOUT:
       localStorage.removeItem("authToken")
-
       return {
         ...state,
         current: {},
