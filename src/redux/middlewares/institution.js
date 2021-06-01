@@ -1,12 +1,12 @@
 import axios from "axios"
 
-import { DB_Link } from "../configs"
+import { DB_Link } from "../../configs"
 import {
   setInstitutionAction,
   setLoginErrorAction,
   logoutAction,
   removeLoginErrorAction
-} from "../redux/actions"
+} from "../actions"
 
 export const login = formData => {
   return async dispatch => {

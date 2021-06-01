@@ -1,0 +1,55 @@
+.Navigator
+  width: 100%
+  min-height: 100vh
+  background: #18202C
+  
+  a
+    text-decoration: none
+
+  .list
+    min-height: 100vh
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    padding-top: 8px
+
+    .block
+      position: relative
+
+      &:first-of-type
+        padding-bottom: 8px
+
+        &::after
+          content: ""
+          display: inline-block
+          width: 100%
+          position: absolute
+          bottom: 0
+          border-bottom: 1px solid rgba(247, 250, 252, 0.2)
+      
+      &:last-of-type
+        padding-top: 8px
+        
+        &::before 
+          content: ""
+          display: inline-block
+          width: 100%
+          position: absolute
+          top: 0
+          border-bottom: 1px solid rgba(247, 250, 252, 0.2)
+
+    .listItem
+      color: rgba(255, 255, 255, 0.7)
+
+      svg
+        color: rgba(255, 255, 255, 0.7) !important
+
+      &:hover, &:focus
+        background: rgba(255, 255, 255, 0.08)
+
+    .activeListItem
+      span
+        color: #4fc3f7 !important
+
+      svg
+        color: #4fc3f7 !important

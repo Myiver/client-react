@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 
 import LoginForm from "./LoginForm/LoginForm"
 import Logo from "../../assets/images/logo.png"
-import Copyright from "../shared/Copyright/Copyright"
-import { login } from "../../actions"
+import Copyright from "../../components/Copyright/Copyright"
+import { login } from "../../redux/middlewares"
 
 import s from "./LoginPage.module.sass"
 
@@ -26,9 +26,7 @@ export default function LoginPage(props) {
       </Grid>
       {loginError && (
         <Grid item xs={8} sm={5} md={4} lg={3} xl={2} className={s.serverErrorBlock}>
-          <Typography variant="body2">
-            {loginError}
-          </Typography>
+          <Typography variant="body2">{loginError}</Typography>
         </Grid>
       )}
 
