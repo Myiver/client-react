@@ -5,7 +5,8 @@ import thunk from "redux-thunk"
 import * as reducers from "./reducers"
 
 const rootReducer = combineReducers({
-  institution: reducers.institutionReducer
+  institution: reducers.institutionReducer,
+  errors: reducers.errorsReducer
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

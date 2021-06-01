@@ -1,16 +1,21 @@
 import axios from "axios"
 
 import { DB_Link } from "../configs"
-import { setInstitutionAction } from "../redux/actions"
+import { setInstitutionAction, setLoginErrorAction, removeLoginErrorAction } from "../redux/actions"
 
 export const login = formData => {
   return async dispatch => {
     try {
-      const { login, password } = formData
+      let { login, password } = formData
       login = login.toLowerCase()
-      
+
       const response = await axios.post(`${DB_Link}/auth/login`, { login, password })
 
+      if (response.data.error) {
+        return dispatch(setLoginErrorAction(response.data.error))
+      }
+
+      dispatch(removeLoginErrorAction())
       localStorage.setItem("authToken", response.data.token)
 
       return dispatch(setInstitutionAction(response.data))

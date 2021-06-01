@@ -1,2 +1,7 @@
+// AUTH
 export const SET_INSTITUTION = "SET_INSTITUTION"
 export const LOGOUT = "LOGOUT"
+
+// ERRORS
+export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR"
+export const REMOVE_LOGIN_ERROR = "REMOVE_LOGIN_ERROR"
