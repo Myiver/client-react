@@ -31,7 +31,7 @@ export default function LoginPage(props) {
       )}
 
       <Grid item xs={12}>
-        <Copyright />
+        <Copyright variant="dark" />
       </Grid>
     </Grid>
   )

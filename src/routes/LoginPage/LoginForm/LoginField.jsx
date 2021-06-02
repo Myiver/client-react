@@ -17,7 +17,7 @@ export default function LoginField(props) {
               id={name}
               name={name}
               type="text"
-              labelWidth={112}
+              labelWidth={96}
               error={form.errors[name] ? true : false}
               {...rest}
               {...field}

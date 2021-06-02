@@ -47,7 +47,7 @@ export default function PasswordField(props) {
                   </IconButton>
                 </InputAdornment>
               }
-              labelWidth={114}
+              labelWidth={102}
               error={form.errors[name] ? true : false}
               {...rest}
               {...field}
