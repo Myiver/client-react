@@ -15,7 +15,7 @@ export default function LoginForm(props) {
   }
 
   const validationSchema = yup.object({
-    login: yup.string().required("Պարտադիր է"),
+    login: yup.string().min(4, "Առնվազն 4 նիշ").required("Պարտադիր է"),
     password: yup.string().min(6, "Առնվազն 6 նիշ").required("Պարտադիր է")
   })
 
