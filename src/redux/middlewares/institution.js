@@ -12,7 +12,7 @@ export const login = formData => {
   return async dispatch => {
     try {
       let { login, password } = formData
-      login = login.toLowerCase()
+      login = login.trim().toLowerCase()
 
       const response = await axios.post(`${DB_Link}/auth/login`, { login, password })
 
