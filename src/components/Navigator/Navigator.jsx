@@ -19,14 +19,17 @@ const menuItems = [
 ]
 
 export default function Navigator(props) {
+  // Data
   const dispatch = useDispatch()
 
+  // Event handlers
   const handleLogout = e => {
     dispatch(logoutAction())
   }
 
+  // View
   return (
-    <div className={s.Navigator}>
+    <nav className={s.Navigator}>
       <List disablePadding className={s.list}>
         <div className={s.block}>
           {menuItems.map(({ path, icon, text }, index) => (
@@ -57,6 +60,6 @@ export default function Navigator(props) {
           <Copyright />
         </div>
       </List>
-    </div>
+    </nav>
   )
 }

@@ -13,9 +13,11 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import PropTypes from "prop-types"
 
 export default function PasswordField(props) {
+  // Data
   const { name, label, ...rest } = props
   const [passwordIsVisible, setPasswordIsVisible] = useState(false)
 
+  // Event handlers
   const handleTogglePasswordVisibility = () => {
     setPasswordIsVisible(!passwordIsVisible)
   }
@@ -24,6 +26,7 @@ export default function PasswordField(props) {
     e.preventDefault()
   }
 
+  // View
   return (
     <Field name={name}>
       {({ field, form }) => {

@@ -3,8 +3,10 @@ import { FormControl, InputLabel, OutlinedInput, Typography } from "@material-ui
 import PropTypes from "prop-types"
 
 export default function LoginField(props) {
+  // Data
   const { name, label, ...rest } = props
 
+  // View
   return (
     <Field name={name}>
       {({ field, form }) => {

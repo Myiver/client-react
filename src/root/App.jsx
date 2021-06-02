@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { Switch, Route, useHistory, Redirect, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { Grid } from "@material-ui/core"
+import { Grid, useMediaQuery } from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
 
 import LoginPage from "../routes/LoginPage/LoginPage"
 import Homepage from "../routes/Homepage/Homepage"
@@ -14,12 +15,26 @@ import { verifyToken } from "../redux/middlewares"
 import s from "./App.module.sass"
 
 export default function App(props) {
+  // Data
   const [loading, setLoading] = useState(true)
   const history = useHistory()
   const location = useLocation()
   const dispatch = useDispatch()
   const isAuth = useSelector(state => state.institution.isAuth)
 
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.up("xs")) // 0px
+  const sm = useMediaQuery(theme.breakpoints.up("sm")) // 600px
+  const md = useMediaQuery(theme.breakpoints.up("md")) // 960px
+  const lg = useMediaQuery(theme.breakpoints.up("lg")) // 1280px
+  const xl = useMediaQuery(theme.breakpoints.up("xl")) // 1920px
+  console.log("up 0", xs)
+  console.log("up 600", sm)
+  console.log("up 960", md)
+  console.log("up 1280", lg)
+  console.log("up 1920", xl)
+
+  // Lifecycles
   useEffect(() => {
     if (isAuth && location.pathname.includes("/login")) {
       history.push("/")
@@ -31,6 +46,7 @@ export default function App(props) {
     }
   }, [dispatch, history, isAuth, location.pathname])
 
+  // View
   return (
     <div className={s.App}>
       {isAuth ? (

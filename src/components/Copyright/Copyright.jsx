@@ -4,11 +4,13 @@ import { Typography } from "@material-ui/core"
 import s from "./Copyright.module.sass"
 
 export default function Copyright(props) {
+  // Data
   const { variant } = props
   const year = new Date().getFullYear()
   const yearString = year === 2021 ? year : `2021 - ${year}`
   const colorStyle = variant === "dark" ? s.dark : s.light
 
+  // View
   return (
     <Typography variant="body2" gutterBottom className={`${s.Copyright} ${colorStyle}`}>
       &copy; {yearString} myiver.com

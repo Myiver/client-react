@@ -1,3 +1,17 @@
+import Header from "../../components/Header/Header"
+
+import s from "./Groups.module.sass"
+
+const menuItems = [
+  { path: "/groups", text: "Բոլորը" },
+  { path: "/groups/new", text: "Նոր +" }
+]
+
 export default function Groups(props) {
-  return <h1>Groups</h1>
+  // View
+  return (
+    <>
+      <Header title="Խմբեր" menuItems={menuItems} />
+    </>
+  )
 }

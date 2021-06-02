@@ -7,6 +7,7 @@ import PasswordField from "./PasswordField"
 import LoginField from "./LoginField"
 
 export default function LoginForm(props) {
+  // Data
   const { onSubmit } = props
 
   const initialValues = {
@@ -19,6 +20,7 @@ export default function LoginForm(props) {
     password: yup.string().min(6, "Առնվազն 6 նիշ").required("Պարտադիր է")
   })
 
+  // View
   return (
     <Formik
       initialValues={initialValues}

@@ -1,3 +1,6 @@
+import s from "./Homepage.module.sass"
+
 export default function Homepage(props) {
-  return <h1>Homepage</h1>
+  // View
+  return <div className={s.Homepage}>Գլխավոր</div>
 }

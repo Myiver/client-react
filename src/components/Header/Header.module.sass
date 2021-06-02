@@ -1,0 +1,35 @@
+.Header
+  background: #009be5
+  padding-top: 26px
+  padding-left: 32px
+
+  h1
+    color: #fff
+    font-size: 24px
+    margin-bottom: 16px
+
+  .list
+    padding: 0
+    display: inilne-flex
+    flex-direction: row !important
+
+    a
+      display: inline-flex
+      margin-right: 8px
+      color: #B2E0F7
+      text-decoration: none
+      font-weight: bold !important
+
+    .activeListItem
+      color: #fff
+      position: relative
+
+      &::after
+        content: ""
+        display: inline-block
+        width: 85%
+        margin-left: 7.5%
+        position: absolute
+        bottom: 0
+        border-bottom: 4px solid #fff
+        border-radius: 100px 100px 100px 100px

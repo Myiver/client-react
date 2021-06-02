@@ -9,13 +9,16 @@ import { login } from "../../redux/middlewares"
 import s from "./LoginPage.module.sass"
 
 export default function LoginPage(props) {
+  // Data
   const dispatch = useDispatch()
   const loginError = useSelector(state => state.errors.login)
 
+  // Event handlers
   const handleSubmit = formData => {
     dispatch(login(formData))
   }
 
+  // View
   return (
     <Grid container className={s.container}>
       <Grid item xs={8} sm={5} md={4} lg={3} xl={2} className={s.logoBlock}>
