@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { FastField } from "formik"
+import { Field } from "formik"
 import {
   FormControl,
   InputLabel,
@@ -11,6 +11,8 @@ import {
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import PropTypes from "prop-types"
+
+import s from "./PasswordField.module.sass"
 
 export default function PasswordField(props) {
   // Data
@@ -28,7 +30,7 @@ export default function PasswordField(props) {
 
   // View
   return (
-    <FastField name={name}>
+    <Field name={name}>
       {({ field, form }) => {
         return (
           <FormControl variant="outlined" fullWidth>
@@ -56,14 +58,14 @@ export default function PasswordField(props) {
               {...field}
             />
             {form.errors[name] && (
-              <Typography align="left" variant="caption" color="error">
+              <Typography align="left" variant="caption" color="error" className={s.error}>
                 {form.errors[name]}
               </Typography>
             )}
           </FormControl>
         )
       }}
-    </FastField>
+    </Field>
   )
 }
 

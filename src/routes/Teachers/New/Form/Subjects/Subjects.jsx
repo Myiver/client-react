@@ -1,8 +1,7 @@
-import { useState } from "react"
 import { useSelector } from "react-redux"
 import { FastField } from "formik"
 import PropTypes from "prop-types"
-import { FormControlLabel, Checkbox, Typography } from "@material-ui/core"
+import { FormControlLabel, Checkbox } from "@material-ui/core"
 
 import s from "./Subjects.module.sass"
 
@@ -28,7 +27,6 @@ export default function Subjects(props) {
                   />
                 )
               })}
-              
             </div>
           )
         }}

@@ -3,8 +3,8 @@ import { Formik, Form } from "formik"
 import * as yup from "yup"
 import PropTypes from "prop-types"
 
-import PasswordField from "./PasswordField"
 import LoginField from "./LoginField"
+import PasswordField from "./PasswordField/PasswordField"
 
 export default function LoginForm(props) {
   // Data
