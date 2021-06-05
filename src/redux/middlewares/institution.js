@@ -23,7 +23,7 @@ export const login = formData => {
       dispatch(removeLoginErrorAction())
       localStorage.setItem("authToken", response.data.token)
 
-      return dispatch(setInstitutionAction(response.data))
+      return dispatch(setInstitutionAction(response.data.institution))
     } catch (error) {
       return
     }
@@ -46,7 +46,7 @@ export const verifyToken = setLoading => {
 
       localStorage.setItem("authToken", response.data.token)
 
-      return dispatch(setInstitutionAction(response.data))
+      return dispatch(setInstitutionAction(response.data.institution))
     } catch (error) {
       localStorage.removeItem("authToken")
     }

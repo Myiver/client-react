@@ -28,17 +28,15 @@ export default function LoginForm(props) {
       onSubmit={onSubmit}
       validateOnBlur={false}
       validateOnChange={false}>
-      {formik => {
-        return (
-          <Form>
-            <LoginField name="login" label="Մուտքանուն" />
-            <PasswordField name="password" label="Գաղտնաբառ" />
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Մուտք
-            </Button>
-          </Form>
-        )
-      }}
+      {formik => (
+        <Form>
+          <LoginField name="login" label="Մուտքանուն" />
+          <PasswordField name="password" label="Գաղտնաբառ" />
+          <Button type="submit" fullWidth variant="contained" color="primary">
+            Մուտք
+          </Button>
+        </Form>
+      )}
     </Formik>
   )
 }

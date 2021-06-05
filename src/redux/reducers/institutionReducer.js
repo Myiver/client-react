@@ -12,7 +12,7 @@ export const institutionReducer = (state = initialState, action) => {
     case SET_INSTITUTION:
       return {
         ...state,
-        current: payload.institution,
+        current: payload,
         isAuth: true
       }
 

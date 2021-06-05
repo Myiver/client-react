@@ -5,3 +5,6 @@ export const LOGOUT = "LOGOUT"
 // ERRORS
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR"
 export const REMOVE_LOGIN_ERROR = "REMOVE_LOGIN_ERROR"
+
+// SUBJECTS
+export const SET_SUBJECTS = "SET_SUBJECTS"

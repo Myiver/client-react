@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Field } from "formik"
+import { FastField } from "formik"
 import {
   FormControl,
   InputLabel,
@@ -28,7 +28,7 @@ export default function PasswordField(props) {
 
   // View
   return (
-    <Field name={name}>
+    <FastField name={name}>
       {({ field, form }) => {
         return (
           <FormControl variant="outlined" fullWidth>
@@ -63,7 +63,7 @@ export default function PasswordField(props) {
           </FormControl>
         )
       }}
-    </Field>
+    </FastField>
   )
 }
 
