@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
 
 import { getAllSubjects } from "../../../redux/middlewares"
 import Loader from "../../../components/Loader/Loader"
 import NewTacherForm from "./Form/NewTacherForm"
+import { DB_Link } from "../../../configs"
 
 import s from "./New.module.sass"
 
@@ -23,8 +25,9 @@ export default function New(props) {
   }, [dispatch, subjects.length])
 
   // Handle Events
-  const onSubmit = (formData, form) => {
-    console.log(formData)
+  const onSubmit = async (formData, form) => {
+    await axios.post(`${DB_Link}/teachers/new`, formData)
+
     form.resetForm()
   }
 
