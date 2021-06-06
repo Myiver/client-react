@@ -62,7 +62,12 @@ export default function NewTacherForm(props) {
               {formik.errors["subjects"]}
             </Typography>
           )}
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            color="primary"
+            disabled={formik.isSubmitting}>
             Հաստատել
           </Button>
         </Form>

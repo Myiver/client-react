@@ -7,7 +7,8 @@ import * as reducers from "./reducers"
 const rootReducer = combineReducers({
   institution: reducers.institutionReducer,
   errors: reducers.errorsReducer,
-  subjects: reducers.subjectsReducer
+  subjects: reducers.subjectsReducer,
+  teachers: reducers.teachersReducer
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

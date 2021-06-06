@@ -14,8 +14,8 @@ export default function LoginPage(props) {
   const loginError = useSelector(state => state.errors.login)
 
   // Event handlers
-  const handleSubmit = formData => {
-    dispatch(login(formData))
+  const handleSubmit = (formData, form) => {
+    dispatch(login(formData, form.setSubmitting))
   }
 
   // View

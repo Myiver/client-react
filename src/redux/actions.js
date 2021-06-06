@@ -10,3 +10,6 @@ export const removeLoginErrorAction = payload => ({ type: types.REMOVE_LOGIN_ERR
 
 // SUBJECTS
 export const setSubjectsAction = payload => ({ type: types.SET_SUBJECTS, payload })
+
+// TEACHERS
+export const refreshTeachersListAction = payload => ({ type: types.REFRESH_LIST, payload })

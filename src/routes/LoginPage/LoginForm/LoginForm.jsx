@@ -32,7 +32,12 @@ export default function LoginForm(props) {
         <Form>
           <LoginField name="login" label="Մուտքանուն" />
           <PasswordField name="password" label="Գաղտնաբառ" />
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            disabled={formik.isSubmitting}>
             Մուտք
           </Button>
         </Form>

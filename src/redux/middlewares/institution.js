@@ -8,7 +8,7 @@ import {
   removeLoginErrorAction
 } from "../actions"
 
-export const login = formData => {
+export const login = (formData, setSubmittingForm) => {
   return async dispatch => {
     try {
       let { login, password } = formData
@@ -17,12 +17,14 @@ export const login = formData => {
       const response = await axios.post(`${DB_Link}/auth/login`, { login, password })
 
       if (response.data.error) {
+        setSubmittingForm(false)
         return dispatch(setLoginErrorAction(response.data.error))
       }
 
       dispatch(removeLoginErrorAction())
       localStorage.setItem("authToken", response.data.token)
 
+      setSubmittingForm(false)
       return dispatch(setInstitutionAction(response.data.institution))
     } catch (error) {
       return
