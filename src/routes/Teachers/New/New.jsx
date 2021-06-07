@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 
 import { getAllSubjects, refreshTeachersList } from "../../../redux/middlewares"
+import { setNewTeacherErrorAction } from "../../../redux/actions"
 import Loader from "../../../components/Loader/Loader"
-import NewTacherForm from "./Form/NewTacherForm"
+import NewTeacherForm from "./Form/NewTeacherForm"
 import { DB_Link } from "../../../configs"
 
 import s from "./New.module.sass"
@@ -27,10 +28,16 @@ export default function New(props) {
 
   // Handle Events
   const onSubmit = async (formData, form) => {
-    await axios.post(`${DB_Link}/teachers/new`, formData)
-    dispatch(refreshTeachersList(institutionId))
+    const response = await axios.post(`${DB_Link}/teachers/new`, formData)
 
-    form.resetForm()
+    if (response.data.error) {
+      dispatch(setNewTeacherErrorAction(response.data.error))
+    } else {
+      dispatch(setNewTeacherErrorAction(null))
+      dispatch(refreshTeachersList(institutionId))
+
+      form.resetForm()
+    }
   }
 
   // View
@@ -38,7 +45,7 @@ export default function New(props) {
     <Loader />
   ) : (
     <div className={s.New}>
-      <NewTacherForm onSubmit={onSubmit} />
+      <NewTeacherForm onSubmit={onSubmit} />
     </div>
   )
 }

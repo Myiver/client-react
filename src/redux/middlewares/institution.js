@@ -4,8 +4,7 @@ import { DB_Link } from "../../configs"
 import {
   setInstitutionAction,
   setLoginErrorAction,
-  logoutAction,
-  removeLoginErrorAction
+  logoutAction
 } from "../actions"
 
 export const login = (formData, setSubmittingForm) => {
@@ -21,7 +20,7 @@ export const login = (formData, setSubmittingForm) => {
         return dispatch(setLoginErrorAction(response.data.error))
       }
 
-      dispatch(removeLoginErrorAction())
+      dispatch(setLoginErrorAction(null))
       localStorage.setItem("authToken", response.data.token)
 
       setSubmittingForm(false)

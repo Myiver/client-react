@@ -6,7 +6,7 @@ export const logoutAction = payload => ({ type: types.LOGOUT, payload })
 
 // ERRORS
 export const setLoginErrorAction = payload => ({ type: types.SET_LOGIN_ERROR, payload })
-export const removeLoginErrorAction = payload => ({ type: types.REMOVE_LOGIN_ERROR, payload })
+export const setNewTeacherErrorAction = payload => ({ type: types.SET_NEW_TEACHER_ERROR, payload })
 
 // SUBJECTS
 export const setSubjectsAction = payload => ({ type: types.SET_SUBJECTS, payload })

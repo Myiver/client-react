@@ -9,10 +9,11 @@ import Subjects from "./Subjects/Subjects"
 
 import s from "./NewTeacherForm.module.sass"
 
-export default function NewTacherForm(props) {
+export default function NewTeacherForm(props) {
   // Data
   const { onSubmit } = props
   const institutionId = useSelector(state => state.institution.current._id)
+  const newTeacherError = useSelector(state => state.errors.newTeacher)
 
   const initialValues = {
     firstName: "",
@@ -62,6 +63,11 @@ export default function NewTacherForm(props) {
               {formik.errors["subjects"]}
             </Typography>
           )}
+          {newTeacherError && (
+            <Typography variant="body2" className={s.error}>
+              {newTeacherError}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"
@@ -76,6 +82,6 @@ export default function NewTacherForm(props) {
   )
 }
 
-NewTacherForm.propTypes = {
+NewTeacherForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }

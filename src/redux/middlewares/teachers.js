@@ -1,7 +1,7 @@
 import axios from "axios"
 
 import { DB_Link } from "../../configs"
-import { refreshTeachersListAction } from "../../redux/actions"
+import { refreshTeachersListAction, setNewTeacherErrorAction } from "../../redux/actions"
 
 /* Get teahcers list from db */
 export const refreshTeachersList = _id => {

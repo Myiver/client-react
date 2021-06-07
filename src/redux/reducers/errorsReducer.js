@@ -1,7 +1,8 @@
-import { SET_LOGIN_ERROR, REMOVE_LOGIN_ERROR } from "../actionTypes"
+import { SET_LOGIN_ERROR, SET_NEW_TEACHER_ERROR } from "../actionTypes"
 
 const initialState = {
-  login: null
+  login: null,
+  newTeacher: null
 }
 
 export const errorsReducer = (state = initialState, action) => {
@@ -11,8 +12,8 @@ export const errorsReducer = (state = initialState, action) => {
     case SET_LOGIN_ERROR:
       return { ...state, login: payload }
 
-    case REMOVE_LOGIN_ERROR:
-      return { ...state, login: null }
+    case SET_NEW_TEACHER_ERROR:
+      return { ...state, newTeacher: payload }
 
     default:
       return state
