@@ -11,62 +11,26 @@ export default function NameFields(props) {
   // View
   return (
     <div className={s.NameFields}>
-      <FastField name={inputData.firstName.name}>
-        {({ field, form }) => (
-          <FormControl variant="outlined">
-            <TextField
-              variant="outlined"
-              size="small"
-              helperText={form.errors[field.name]}
-              label={inputData.firstName.label}
-              id={field.name}
-              name={field.name}
-              type="text"
-              error={form.errors[field.name] ? true : false}
-              autoComplete="off"
-              {...field}
-            />
-          </FormControl>
-        )}
-      </FastField>
-
-      <FastField name={inputData.lastName.name}>
-        {({ field, form }) => (
-          <FormControl variant="outlined">
-            <TextField
-              variant="outlined"
-              size="small"
-              helperText={form.errors[field.name]}
-              label={inputData.lastName.label}
-              id={field.name}
-              name={field.name}
-              type="text"
-              error={form.errors[field.name] ? true : false}
-              autoComplete="off"
-              {...field}
-            />
-          </FormControl>
-        )}
-      </FastField>
-
-      <FastField name={inputData.patronymic.name}>
-        {({ field, form }) => (
-          <FormControl variant="outlined">
-            <TextField
-              variant="outlined"
-              size="small"
-              helperText={form.errors[field.name]}
-              label={inputData.patronymic.label}
-              id={field.name}
-              name={field.name}
-              type="text"
-              error={form.errors[field.name] ? true : false}
-              autoComplete="off"
-              {...field}
-            />
-          </FormControl>
-        )}
-      </FastField>
+      {Object.values(inputData).map((input, index) => (
+        <FastField name={input.name} key={index}>
+          {({ field, form }) => (
+            <FormControl variant="outlined">
+              <TextField
+                variant="outlined"
+                size="small"
+                helperText={form.errors[field.name]}
+                label={input.label}
+                id={field.name}
+                name={field.name}
+                type="text"
+                error={form.errors[field.name] ? true : false}
+                autoComplete="off"
+                {...field}
+              />
+            </FormControl>
+          )}
+        </FastField>
+      ))}
     </div>
   )
 }

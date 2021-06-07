@@ -35,9 +35,9 @@ export default function New(props) {
     } else {
       dispatch(setNewTeacherErrorAction(null))
       dispatch(refreshTeachersList(institutionId))
-
-      form.resetForm()
     }
+
+    form.resetForm()
   }
 
   // View

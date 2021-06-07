@@ -21,9 +21,8 @@ export default function List(props) {
     { field: "patronymic", headerName: "Հայրանուն", width: 170 }
   ]
 
-  const tableRows = teachers.map((t, i) => {
-    return { ...t, id: i + 1 }
-  })
+  // add id field for all the teacher objects
+  teachers.forEach((teacher, i) => (teacher.id = i + 1))
 
   // Lifecycle
   useEffect(() => {
@@ -40,7 +39,7 @@ export default function List(props) {
   ) : (
     <div style={{ height: 375, width: "100%" }}>
       <DataGrid
-        rows={tableRows}
+        rows={teachers}
         columns={tableColumns}
         pageSize={5}
         disableSelectionOnClick

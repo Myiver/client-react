@@ -31,7 +31,7 @@ export const login = (formData, setSubmittingForm) => {
   }
 }
 
-export const verifyToken = setLoading => {
+export const verifyToken = () => {
   return async dispatch => {
     try {
       const response = await axios.get(`${DB_Link}/auth/verifyToken`, {
@@ -41,7 +41,6 @@ export const verifyToken = setLoading => {
       })
 
       if (response.data.error) {
-        setLoading(false)
         return dispatch(logoutAction())
       }
 

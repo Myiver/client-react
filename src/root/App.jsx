@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Switch, Route, useHistory, Redirect, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { Grid, useMediaQuery } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 
 import LoginPage from "../routes/LoginPage/LoginPage"
 import Homepage from "../routes/Homepage/Homepage"
@@ -23,10 +23,8 @@ export default function App(props) {
 
   // Lifecycles
   useEffect(() => {
-    if (isAuth && location.pathname.includes("/login")) {
-      history.push("/")
-    } else if (localStorage.getItem("authToken") && isAuth === false) {
-      dispatch(verifyToken(setLoading))
+    if (localStorage.getItem("authToken") && isAuth === false) {
+      dispatch(verifyToken())
     } else if (isAuth === false) {
       history.push("/login")
       setLoading(false)

@@ -19,7 +19,7 @@ export default function NewTeacherForm(props) {
     firstName: "",
     lastName: "",
     patronymic: "",
-    institutionId: institutionId,
+    institutionId,
     subjects: []
   }
 
