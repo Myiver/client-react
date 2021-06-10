@@ -14,22 +14,20 @@ export default function Subjects(props) {
   return (
     <div className={s.Subjects}>
       <FastField name={name}>
-        {({ field, form }) => {
-          return (
-            <div className={s.list}>
-              {subjects.map((s, i) => {
-                return (
-                  <FormControlLabel
-                    control={<Checkbox value={s._id} checked={field.value.includes(s._id)} />}
-                    label={s.key}
-                    key={i}
-                    {...field}
-                  />
-                )
-              })}
-            </div>
-          )
-        }}
+        {({ field }) => (
+          <div className={s.list}>
+            {subjects.map((s, i) => {
+              return (
+                <FormControlLabel
+                  control={<Checkbox value={s._id} checked={field.value.includes(s._id)} />}
+                  label={s.key}
+                  key={i}
+                  {...field}
+                />
+              )
+            })}
+          </div>
+        )}
       </FastField>
     </div>
   )

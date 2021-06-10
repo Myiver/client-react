@@ -1,26 +1,25 @@
+import * as yup from "yup"
+import PropTypes from "prop-types"
 import { useSelector } from "react-redux"
 import { Formik, Form } from "formik"
 import { Button, Typography } from "@material-ui/core"
-import PropTypes from "prop-types"
-import * as yup from "yup"
 
 import NameFields from "./NameFields/NameFields"
 import Subjects from "./Subjects/Subjects"
 
-import s from "./NewTeacherForm.module.sass"
+import s from "./EditForm.module.sass"
 
-export default function NewTeacherForm(props) {
+export default function EditForm(props) {
   // Data
-  const { onSubmit } = props
+  const { onSubmit, teacher } = props
   const institutionId = useSelector(state => state.institution.current._id)
-  const newTeacherError = useSelector(state => state.errors.newTeacher)
+  const edittingTeacherError = useSelector(state => state.errors.edittingTeacher)
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    patronymic: "",
+    ...teacher,
+    patronymic: teacher.patronymic === "-" ? "" : teacher.patronymic,
     institutionId,
-    subjects: []
+    subjects: teacher.subjects.map(s => s._id)
   }
 
   const validationSchema = yup.object({
@@ -53,8 +52,8 @@ export default function NewTeacherForm(props) {
       validateOnBlur={false}
       validateOnChange={false}>
       {formik => (
-        <Form className={s.NewTeacherForm}>
-          <Typography variant="h4">Նոր ուսուցիչ</Typography>
+        <Form className={s.EditForm}>
+          <Typography variant="h4">Ուսուցիչ</Typography>
           <NameFields inputData={nameInputsData} />
           <Typography variant="h5">Առարկաներ</Typography>
           <Subjects name="subjects" />
@@ -63,9 +62,9 @@ export default function NewTeacherForm(props) {
               {formik.errors["subjects"]}
             </Typography>
           )}
-          {newTeacherError && (
+          {edittingTeacherError && (
             <Typography variant="body2" className={s.error}>
-              {newTeacherError}
+              {edittingTeacherError}
             </Typography>
           )}
           <Button
@@ -73,7 +72,7 @@ export default function NewTeacherForm(props) {
             variant="contained"
             fullWidth
             color="primary"
-            disabled={formik.isSubmitting}>
+            disabled={formik.isSubmitting || formik.dirty === false}>
             Հաստատել
           </Button>
         </Form>
@@ -82,6 +81,7 @@ export default function NewTeacherForm(props) {
   )
 }
 
-NewTeacherForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+EditForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  teacher: PropTypes.object.isRequired
 }

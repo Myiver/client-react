@@ -7,6 +7,7 @@ import LoginPage from "../routes/LoginPage/LoginPage"
 import Homepage from "../routes/Homepage/Homepage"
 import Groups from "../routes/Groups/Groups"
 import Teachers from "../routes/Teachers/Teachers"
+import EditTeacher from "../routes/EditTeacher/EditTeacher"
 import Navigator from "../components/Navigator/Navigator"
 import Loader from "../components/Loader/Loader"
 import { verifyToken } from "../redux/middlewares"
@@ -45,6 +46,7 @@ export default function App(props) {
               <Route exact path="/" render={props => <Homepage {...props} />} />
               <Route path="/groups" render={props => <Groups {...props} />} />
               <Route path="/teachers" render={props => <Teachers {...props} />} />
+              <Route path="/edit-teacher/:id" render={props => <EditTeacher {...props} />} />
               <Redirect to="/" />
             </Switch>
           </Grid>

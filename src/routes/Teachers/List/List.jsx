@@ -2,17 +2,19 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { DataGrid } from "@material-ui/data-grid"
+import { useHistory } from "react-router-dom"
 
 import Loader from "../../../components/Loader/Loader"
 import { refreshTeachersList } from "../../../redux/middlewares"
 
 export default function List(props) {
   // Data
+  const history = useHistory()
   const [loading, setLoading] = useState(true)
-  const [selectionModel, setSelectionModel] = useState([])
   const teachers = useSelector(state => state.teachers.list)
   const institutionId = useSelector(state => state.institution.current._id)
   const dispatch = useDispatch()
+  const selectionModel = []
 
   const tableColumns = [
     { field: "id", headerName: "N", width: 100 },
@@ -33,6 +35,15 @@ export default function List(props) {
     }
   }, [dispatch, teachers.length, institutionId])
 
+  // Handle events
+  const handleEditTeacher = newSelection => {
+    const teacherIndex = newSelection.selectionModel[0]
+
+    const edittingTeacherId = teachers.find(item => item.id === teacherIndex)._id
+
+    history.push(`/edit-teacher/${edittingTeacherId}`)
+  }
+
   // View
   return loading ? (
     <Loader />
@@ -42,10 +53,7 @@ export default function List(props) {
         rows={teachers}
         columns={tableColumns}
         pageSize={5}
-        disableSelectionOnClick
-        onSelectionModelChange={newSelection => {
-          setSelectionModel(newSelection.selectionModel)
-        }}
+        onSelectionModelChange={handleEditTeacher}
         selectionModel={selectionModel}
       />
     </div>

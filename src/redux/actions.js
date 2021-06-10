@@ -7,9 +7,11 @@ export const logoutAction = payload => ({ type: types.LOGOUT, payload })
 // ERRORS
 export const setLoginErrorAction = payload => ({ type: types.SET_LOGIN_ERROR, payload })
 export const setNewTeacherErrorAction = payload => ({ type: types.SET_NEW_TEACHER_ERROR, payload })
+export const setEdittingTeacherErrorAction = payload => ({ type: types.SET_EDITTING_TEACHER_ERROR, payload })
 
 // SUBJECTS
 export const setSubjectsAction = payload => ({ type: types.SET_SUBJECTS, payload })
 
 // TEACHERS
 export const refreshTeachersListAction = payload => ({ type: types.REFRESH_LIST, payload })
+export const getEdittingTeacherAction = payload => ({ type: types.GET_EDITING_TEACHER, payload })
