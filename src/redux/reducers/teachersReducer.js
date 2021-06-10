@@ -1,4 +1,4 @@
-import { REFRESH_LIST, GET_EDITING_TEACHER } from "../actionTypes"
+import { REFRESH_LIST, GET_EDITING_TEACHER, SET_EDITTING_TEACHER } from "../actionTypes"
 
 const initialState = {
   list: [],
@@ -13,6 +13,7 @@ const teachersReducer = (state = initialState, action) => {
       return { ...state, list: payload }
 
     case GET_EDITING_TEACHER:
+    case SET_EDITTING_TEACHER:
       return { ...state, editting: payload }
 
     default:

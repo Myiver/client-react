@@ -1,13 +1,13 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
 import Header from "../../components/Header/Header"
 import Loader from "../../components/Loader/Loader"
 import EditForm from "./EditForm/EditForm"
 import { getAllSubjects, getEdittingTeacher, refreshTeachersList } from "../../redux/middlewares"
-import { setEdittingTeacherErrorAction } from "../../redux/actions"
+import { setEdittingTeacherErrorAction, setEdittingTeacherAction } from "../../redux/actions"
 import { DB_Link } from "../../configs"
 
 import s from "./EditTeacher.module.sass"
@@ -23,6 +23,7 @@ export default function EditTeacher(props) {
   const subjects = useSelector(state => state.subjects.all)
   const institutionId = useSelector(state => state.institution.current._id)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   // Lifecycle
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function EditTeacher(props) {
   // Handle events
   const handleSubmit = async (formData, form) => {
     try {
-      const response = await axios.post(`${DB_Link}/teachers/edit`, formData)
+      const response = await axios.put(`${DB_Link}/teachers/edit`, formData)
 
       if (response.data.error) {
         dispatch(setEdittingTeacherErrorAction(response.data.error))
@@ -64,6 +65,8 @@ export default function EditTeacher(props) {
         dispatch(refreshTeachersList(institutionId))
       }
 
+      history.push("/teachers")
+      dispatch(setEdittingTeacherAction(null))
       form.resetForm()
     } catch ({ message }) {
       setEdittingTeacherErrorAction(message)
