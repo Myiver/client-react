@@ -1,32 +1,51 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { DataGrid } from "@material-ui/data-grid"
 import { useHistory } from "react-router-dom"
+import { makeStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableCell from "@material-ui/core/TableCell"
+import TableContainer from "@material-ui/core/TableContainer"
+import TableHead from "@material-ui/core/TableHead"
+import TablePagination from "@material-ui/core/TablePagination"
+import TableRow from "@material-ui/core/TableRow"
 
 import Loader from "../../../components/Loader/Loader"
+import OptionsBtnGroup from "./OptionsBtnGroup/OptionsBtnGroup"
 import { refreshTeachersList } from "../../../redux/middlewares"
+import { compareObjects } from "../../../utils/sortArrayOfObjects"
+
+const useStyles = makeStyles({
+  root: {
+    width: "100%"
+  },
+  header: {
+    fontSize: "20px",
+    textDecoration: "underline"
+  }
+})
 
 export default function List(props) {
   // Data
   const history = useHistory()
+  const classes = useStyles()
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(true)
   const teachers = useSelector(state => state.teachers.list)
   const institutionId = useSelector(state => state.institution.current._id)
   const dispatch = useDispatch()
-  const selectionModel = []
 
   const tableColumns = [
-    { field: "id", headerName: "N", width: 100 },
-    { field: "firstName", headerName: "Անուն", width: 170 },
-    { field: "lastName", headerName: "Ազգանուն", width: 170 },
-    { field: "patronymic", headerName: "Հայրանուն", width: 170 }
+    { id: "firstName", label: "Անուն", minWidth: 150 },
+    { id: "lastName", label: "Ազգանուն", minWidth: 150 },
+    { id: "patronymic", label: "Հայրանուն", minWidth: 150 },
+    { id: "options", align: "center", label: "...", minWidth: 150 }
   ]
 
-  // add id field for all the teacher objects
-  teachers.forEach((teacher, i) => (teacher.id = i + 1))
-
-  // Lifecycle
+  // Lifecycle (get teachers list)
   useEffect(() => {
     if (teachers.length) {
       setLoading(false)
@@ -35,27 +54,84 @@ export default function List(props) {
     }
   }, [dispatch, teachers.length, institutionId])
 
-  // Handle events
-  const handleEditTeacher = newSelection => {
-    const teacherIndex = newSelection.selectionModel[0]
-
-    const edittingTeacherId = teachers.find(item => item.id === teacherIndex)._id
-
-    history.push(`/edit-teacher/${edittingTeacherId}`)
+  // Hande events
+  const handleChangePage = (e, newPage) => {
+    setPage(newPage)
   }
+
+  const handleChangeRowsPerPage = e => {
+    setRowsPerPage(+e.target.value)
+    setPage(0)
+  }
+
+  const handleEdit = id => {
+    history.push(`/edit-teacher/${id}`)
+  }
+
+  const handleDelete = id => {
+    console.log("Delete: ", id)
+  }
+
+  // Add action (edit,delete) buttons to every teacher row
+  teachers.forEach(teacher => {
+    teacher.options = (
+      <OptionsBtnGroup
+        onEdit={() => handleEdit(teacher._id)}
+        onDelete={() => handleDelete(teacher._id)}
+      />
+    )
+  })
+
+  // Sort teachers list
+  teachers.sort((a, b) => {
+    return compareObjects(a, b, "firstName")
+  })
 
   // View
   return loading ? (
     <Loader />
   ) : (
-    <div style={{ height: 375, width: "100%" }}>
-      <DataGrid
-        rows={teachers}
-        columns={tableColumns}
-        pageSize={5}
-        onSelectionModelChange={handleEditTeacher}
-        selectionModel={selectionModel}
+    <Paper className={classes.root}>
+      <TableContainer>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead className={classes.header}>
+            <TableRow>
+              {tableColumns.map(column => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                  className={classes.header}
+                  size="medium">
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {teachers
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  {tableColumns.map(column => (
+                    <TableCell key={column.id} align={column.align}>
+                      {row[column.id]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        component="div"
+        count={teachers.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </div>
+    </Paper>
   )
 }
