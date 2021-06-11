@@ -42,7 +42,7 @@ export default function List(props) {
     { id: "firstName", label: "Անուն", minWidth: 150 },
     { id: "lastName", label: "Ազգանուն", minWidth: 150 },
     { id: "patronymic", label: "Հայրանուն", minWidth: 150 },
-    { id: "options", align: "center", label: "...", minWidth: 150 }
+    { id: "options", align: "center", label: "", minWidth: 150 }
   ]
 
   // Lifecycle (get teachers list)
