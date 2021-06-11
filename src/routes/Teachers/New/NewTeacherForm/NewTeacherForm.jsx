@@ -105,7 +105,6 @@ export default function NewTeacherForm(props) {
 
       {modalIsOpen && (
         <Modal
-          title="Համոզվա՞ծ եք"
           message="Փոփոխությունները չեն պահպանվի"
           isOpen={modalIsOpen}
           onCancel={handleToggleModal}

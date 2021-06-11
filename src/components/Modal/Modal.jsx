@@ -51,7 +51,7 @@ const DialogActions = withStyles(theme => ({
 }))(MuiDialogActions)
 
 export default function Modal(props) {
-  const { title, message, isOpen, onSubmit, onCancel } = props
+  const { title, message, cancelMessage, submitMessage, isOpen, onSubmit, onCancel } = props
 
   return (
     <Dialog
@@ -68,14 +68,20 @@ export default function Modal(props) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} color="secondary" variant="contained">
-          ՈՉ
+          {cancelMessage}
         </Button>
         <Button autoFocus onClick={onSubmit} color="primary" variant="contained">
-          ԱՅՈ
+          {submitMessage}
         </Button>
       </DialogActions>
     </Dialog>
   )
+}
+
+Modal.defaultProps = {
+  title: "Համոզվա՞ծ եք",
+  cancelMessage: "ՈՉ",
+  submitMessage: "ԱՅՈ"
 }
 
 Modal.propTypes = {

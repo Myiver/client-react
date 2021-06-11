@@ -1,4 +1,5 @@
 import * as React from "react"
+import axios from "axios"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
@@ -14,8 +15,10 @@ import TableRow from "@material-ui/core/TableRow"
 
 import Loader from "../../../components/Loader/Loader"
 import OptionsBtnGroup from "./OptionsBtnGroup/OptionsBtnGroup"
+import Modal from "../../../components/Modal/Modal"
 import { refreshTeachersList } from "../../../redux/middlewares"
 import { compareObjects } from "../../../utils/sortArrayOfObjects"
+import { DB_Link } from "../../../configs"
 
 const useStyles = makeStyles({
   root: {
@@ -34,6 +37,8 @@ export default function List(props) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(true)
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
+  const [deletingTeacherId, setDeletingTeacherId] = useState(null)
   const teachers = useSelector(state => state.teachers.list)
   const institutionId = useSelector(state => state.institution.current._id)
   const dispatch = useDispatch()
@@ -64,20 +69,38 @@ export default function List(props) {
     setPage(0)
   }
 
-  const handleEdit = id => {
+  const handleEditTeacher = id => {
     history.push(`/edit-teacher/${id}`)
   }
 
-  const handleDelete = id => {
-    console.log("Delete: ", id)
+  const handleOpenDeleteModal = id => {
+    setDeleteModalIsOpen(true)
+    setDeletingTeacherId(id)
+  }
+
+  const toggleDeleteModal = () => {
+    setDeleteModalIsOpen(!deleteModalIsOpen)
+  }
+
+  const handleDeleteTeacher = async () => {
+    try {
+      await axios.delete(`${DB_Link}/teachers/delete/${deletingTeacherId}`)
+
+      dispatch(refreshTeachersList(institutionId))
+    } catch (error) {
+      alert(Error, error.message)
+    } finally {
+      setDeletingTeacherId(null)
+      toggleDeleteModal()
+    }
   }
 
   // Add action (edit,delete) buttons to every teacher row
   teachers.forEach(teacher => {
     teacher.options = (
       <OptionsBtnGroup
-        onEdit={() => handleEdit(teacher._id)}
-        onDelete={() => handleDelete(teacher._id)}
+        onEdit={() => handleEditTeacher(teacher._id)}
+        onDelete={() => handleOpenDeleteModal(teacher._id)}
       />
     )
   })
@@ -91,47 +114,58 @@ export default function List(props) {
   return loading ? (
     <Loader />
   ) : (
-    <Paper className={classes.root}>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead className={classes.header}>
-            <TableRow>
-              {tableColumns.map(column => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                  className={classes.header}
-                  size="medium">
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {teachers
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  {tableColumns.map(column => (
-                    <TableCell key={column.id} align={column.align}>
-                      {row[column.id]}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        component="div"
-        count={teachers.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <>
+      <Paper className={classes.root}>
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead className={classes.header}>
+              <TableRow>
+                {tableColumns.map(column => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                    className={classes.header}
+                    size="medium">
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {teachers
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {tableColumns.map(column => (
+                      <TableCell key={column.id} align={column.align}>
+                        {row[column.id]}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          component="div"
+          count={teachers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+
+      {deleteModalIsOpen && (
+        <Modal
+          message="Տվյալները չեն կարող վերականգնվել"
+          isOpen={deleteModalIsOpen}
+          onCancel={toggleDeleteModal}
+          onSubmit={handleDeleteTeacher}
+        />
+      )}
+    </>
   )
 }
