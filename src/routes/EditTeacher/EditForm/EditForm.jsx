@@ -90,7 +90,7 @@ export default function EditForm(props) {
               <Button
                 variant="contained"
                 color="secondary"
-                type="reset"
+                type="button"
                 onClick={formik.dirty ? handleToggleModal : handleReset}>
                 ՉԵՂԱՐԿԵԼ
               </Button>

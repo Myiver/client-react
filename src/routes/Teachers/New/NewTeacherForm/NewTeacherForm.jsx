@@ -23,7 +23,7 @@ export default function NewTeacherForm(props) {
   const initialValues = {
     firstName: "",
     lastName: "",
-    patronymic: "",
+    patronymic: " ",
     institutionId,
     subjects: []
   }
