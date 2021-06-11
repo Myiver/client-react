@@ -15,7 +15,9 @@ import TableRow from "@material-ui/core/TableRow"
 import Loader from "../../../components/Loader/Loader"
 import OptionsBtnGroup from "./OptionsBtnGroup/OptionsBtnGroup"
 import Modal from "../../../components/Modal/Modal"
+import PresentedTeacher from "./PresentedTeacher/PresentedTeacher"
 import { refreshTeachersList } from "../../../redux/middlewares"
+import { setPresentedTeacherAction } from "../../../redux/actions"
 import { compareObjects } from "../../../utils/sortArrayOfObjects"
 import { DB_Link } from "../../../configs"
 
@@ -23,15 +25,19 @@ import s from "./List.module.sass"
 
 export default function List(props) {
   // Data
+  const dispatch = useDispatch()
   const history = useHistory()
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(true)
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
   const [deletingTeacherId, setDeletingTeacherId] = useState(null)
+  const [presentedTeacherIsOpen, setPresentedTeacherIsOpen] = useState(false)
+  const [presentedTeacherId, setPresentedTeacherId] = useState(null)
+
   const teachers = useSelector(state => state.teachers.list)
   const institutionId = useSelector(state => state.institution.current._id)
-  const dispatch = useDispatch()
 
   const tableColumns = [
     { id: "firstName", label: "Անուն", minWidth: 100 },
@@ -59,17 +65,24 @@ export default function List(props) {
     setPage(0)
   }
 
-  const handleShowTeacherFullInfo = id => {
-    console.log("Show teacher full info: ", id)
+  const handleClosePresentedTeacher = () => {
+    setPresentedTeacherIsOpen(false)
+    setPresentedTeacherId(null)
+    dispatch(setPresentedTeacherAction(null))
   }
 
-  const handleEditTeacher = id => {
-    history.push(`/edit-teacher/${id}`)
+  const handlePresentTeacher = _id => {
+    setPresentedTeacherId(_id)
+    setPresentedTeacherIsOpen(true)
   }
 
-  const handleOpenDeleteModal = id => {
+  const handleEditTeacher = _id => {
+    history.push(`/edit-teacher/${_id}`)
+  }
+
+  const handleOpenDeleteModal = _id => {
     setDeleteModalIsOpen(true)
-    setDeletingTeacherId(id)
+    setDeletingTeacherId(_id)
   }
 
   const toggleDeleteModal = () => {
@@ -91,13 +104,13 @@ export default function List(props) {
 
   // Add action (edit,delete) buttons to every teacher row
   teachers.forEach(teacher => {
-    const id = teacher._id
+    const { _id } = teacher
 
     teacher.options = (
       <OptionsBtnGroup
-        onShowFullInfo={() => handleShowTeacherFullInfo(id)}
-        onEdit={() => handleEditTeacher(id)}
-        onDelete={() => handleOpenDeleteModal(id)}
+        onPresent={() => handlePresentTeacher(_id)}
+        onEdit={() => handleEditTeacher(_id)}
+        onDelete={() => handleOpenDeleteModal(_id)}
       />
     )
   })
@@ -161,6 +174,14 @@ export default function List(props) {
           isOpen={deleteModalIsOpen}
           onCancel={toggleDeleteModal}
           onSubmit={handleDeleteTeacher}
+        />
+      )}
+
+      {presentedTeacherId && (
+        <PresentedTeacher
+          id={presentedTeacherId}
+          isOpen={presentedTeacherIsOpen}
+          onClose={handleClosePresentedTeacher}
         />
       )}
     </>

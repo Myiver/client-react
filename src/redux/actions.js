@@ -16,3 +16,4 @@ export const setSubjectsAction = payload => ({ type: types.SET_SUBJECTS, payload
 export const refreshTeachersListAction = payload => ({ type: types.REFRESH_LIST, payload })
 export const getEdittingTeacherAction = payload => ({ type: types.GET_EDITING_TEACHER, payload })
 export const setEdittingTeacherAction = payload => ({ type: types.SET_EDITTING_TEACHER, payload })
+export const setPresentedTeacherAction = payload => ({ type: types.SET_PRESENTED_TEACHER, payload })

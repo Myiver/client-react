@@ -1,7 +1,11 @@
 import axios from "axios"
 
 import { DB_Link } from "../../configs"
-import { refreshTeachersListAction, getEdittingTeacherAction } from "../../redux/actions"
+import {
+  refreshTeachersListAction,
+  getEdittingTeacherAction,
+  setPresentedTeacherAction
+} from "../actions"
 
 /* Get teahcers list from db */
 export const refreshTeachersList = _id => {
@@ -23,6 +27,19 @@ export const getEdittingTeacher = _id => {
       const response = await axios.get(`${DB_Link}/teachers/get-one/${_id}`)
 
       return dispatch(getEdittingTeacherAction(response.data.teacher))
+    } catch (error) {
+      return
+    }
+  }
+}
+
+/* Get teacher full info */
+export const getTeacherFullInfo = _id => {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`${DB_Link}/teachers/get-one/${_id}`)
+
+      return dispatch(setPresentedTeacherAction(response.data.teacher))
     } catch (error) {
       return
     }

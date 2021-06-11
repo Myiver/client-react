@@ -7,12 +7,12 @@ import Button from "@material-ui/core/Button"
 import s from "./OptionsBtnGroup.module.sass"
 
 export default function OptionsBtnGroup(props) {
-  const { onShowFullInfo, onEdit, onDelete } = props
+  const { onPresent, onEdit, onDelete } = props
 
   return (
     <div className={s.OptionsBtnGroup}>
       <Button
-        onClick={onShowFullInfo}
+        onClick={onPresent}
         variant="outlined"
         color="primary"
         size="small"
@@ -40,7 +40,7 @@ export default function OptionsBtnGroup(props) {
 }
 
 OptionsBtnGroup.propTypes = {
-  onShowFullInfo: PropTypes.func.isRequired,
+  onPresent: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 }
