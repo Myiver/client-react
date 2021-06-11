@@ -3,7 +3,6 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
@@ -20,20 +19,11 @@ import { refreshTeachersList } from "../../../redux/middlewares"
 import { compareObjects } from "../../../utils/sortArrayOfObjects"
 import { DB_Link } from "../../../configs"
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%"
-  },
-  header: {
-    fontSize: "20px",
-    textDecoration: "underline"
-  }
-})
+import s from "./List.module.sass"
 
 export default function List(props) {
   // Data
   const history = useHistory()
-  const classes = useStyles()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [loading, setLoading] = useState(true)
@@ -44,9 +34,9 @@ export default function List(props) {
   const dispatch = useDispatch()
 
   const tableColumns = [
-    { id: "firstName", label: "Անուն", minWidth: 150 },
-    { id: "lastName", label: "Ազգանուն", minWidth: 150 },
-    { id: "patronymic", label: "Հայրանուն", minWidth: 150 },
+    { id: "firstName", label: "Անուն", minWidth: 100 },
+    { id: "lastName", label: "Ազգանուն", minWidth: 100 },
+    { id: "patronymic", label: "Հայրանուն", minWidth: 100 },
     { id: "options", align: "center", label: "", minWidth: 150 }
   ]
 
@@ -67,6 +57,10 @@ export default function List(props) {
   const handleChangeRowsPerPage = e => {
     setRowsPerPage(+e.target.value)
     setPage(0)
+  }
+
+  const handleShowTeacherFullInfo = id => {
+    console.log("Show teacher full info: ", id)
   }
 
   const handleEditTeacher = id => {
@@ -97,10 +91,13 @@ export default function List(props) {
 
   // Add action (edit,delete) buttons to every teacher row
   teachers.forEach(teacher => {
+    const id = teacher._id
+
     teacher.options = (
       <OptionsBtnGroup
-        onEdit={() => handleEditTeacher(teacher._id)}
-        onDelete={() => handleOpenDeleteModal(teacher._id)}
+        onShowFullInfo={() => handleShowTeacherFullInfo(id)}
+        onEdit={() => handleEditTeacher(id)}
+        onDelete={() => handleOpenDeleteModal(id)}
       />
     )
   })
@@ -115,17 +112,17 @@ export default function List(props) {
     <Loader />
   ) : (
     <>
-      <Paper className={classes.root}>
+      <Paper className={s.root}>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead className={classes.header}>
+            <TableHead>
               <TableRow>
                 {tableColumns.map(column => (
                   <TableCell
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
-                    className={classes.header}
+                    className={s.header}
                     size="medium">
                     {column.label}
                   </TableCell>
