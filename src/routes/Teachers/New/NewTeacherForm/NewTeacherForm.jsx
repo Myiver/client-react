@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { Formik, Form } from "formik"
 import { Button, Typography } from "@material-ui/core"
 import PropTypes from "prop-types"
+import { useHistory } from "react-router-dom"
 
 import NameFields from "./NameFields/NameFields"
 import Subjects from "./Subjects/Subjects"
@@ -14,6 +15,7 @@ export default function NewTeacherForm(props) {
   const { onSubmit } = props
   const institutionId = useSelector(state => state.institution.current._id)
   const newTeacherError = useSelector(state => state.errors.newTeacher)
+  const history = useHistory()
 
   const initialValues = {
     firstName: "",
@@ -44,6 +46,11 @@ export default function NewTeacherForm(props) {
     }
   }
 
+  // Hande events
+  const handleReset = e => {
+    history.push("/teachers")
+  }
+
   // View
   return (
     <Formik
@@ -68,14 +75,18 @@ export default function NewTeacherForm(props) {
               {newTeacherError}
             </Typography>
           )}
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            color="primary"
-            disabled={formik.isSubmitting || formik.dirty === false}>
-            Հաստատել
-          </Button>
+          <div className={s.buttons}>
+            <Button variant="contained" color="secondary" type="reset" onClick={handleReset}>
+              ՉԵՂԱՐԿԵԼ
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={formik.isSubmitting || formik.dirty === false}>
+              ՀԱՍՏԱՏԵԼ
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

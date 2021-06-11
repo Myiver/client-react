@@ -12,18 +12,18 @@ import { DB_Link } from "../../configs"
 
 import s from "./EditTeacher.module.sass"
 
-const menuItems = [{ path: "/teachers", text: "Բոլորը" }]
-
 export default function EditTeacher(props) {
   // Data
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
-  const [fullName, setFullName] = useState("- - -")
   const teacher = useSelector(state => state.teachers.editting)
   const subjects = useSelector(state => state.subjects.all)
   const institutionId = useSelector(state => state.institution.current._id)
   const dispatch = useDispatch()
   const history = useHistory()
+  const teacherFullName = teacher
+    ? `${teacher.firstName} ${teacher.lastName} ${teacher.patronymic}`
+    : "- - -"
 
   // Lifecycle
   useEffect(() => {
@@ -42,15 +42,14 @@ export default function EditTeacher(props) {
       if (teacher === null) {
         dispatch(getEdittingTeacher(id))
       } else {
-        const fullName = `${teacher.firstName} ${teacher.lastName} ${
-          teacher.patronymic === "-" ? "" : teacher.patronymic
-        }`
-
-        setFullName(fullName)
+        // Change document title
+        document.title = `${teacher.firstName} ${teacher.lastName}`
       }
     } catch ({ message }) {
       alert("Teacher getting error: ", message)
     }
+
+    return () => (document.title = "Myiver")
   }, [id, dispatch, subjects.length, teacher])
 
   // Handle events
@@ -76,7 +75,7 @@ export default function EditTeacher(props) {
   // View
   return (
     <div className={s.EditTeacher}>
-      <Header title={fullName} menuItems={menuItems} />
+      <Header title={teacherFullName} />
 
       {loading ? (
         <Loader />

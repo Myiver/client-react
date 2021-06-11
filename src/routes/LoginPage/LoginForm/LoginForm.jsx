@@ -38,7 +38,7 @@ export default function LoginForm(props) {
             variant="contained"
             color="primary"
             disabled={formik.isSubmitting}>
-            Մուտք
+            ՄՈւՏՔ
           </Button>
         </Form>
       )}

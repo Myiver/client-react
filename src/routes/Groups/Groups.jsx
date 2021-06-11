@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 import Header from "../../components/Header/Header"
 
 const menuItems = [
@@ -6,6 +8,13 @@ const menuItems = [
 ]
 
 export default function Groups(props) {
+  // Lifecycle
+  useEffect(() => {
+    document.title = "Խմբեր"
+
+    return () => (document.title = "Myiver")
+  }, [])
+
   // View
   return (
     <>

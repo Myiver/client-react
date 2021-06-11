@@ -1,11 +1,13 @@
 import * as yup from "yup"
 import PropTypes from "prop-types"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { Formik, Form } from "formik"
 import { Button, Typography } from "@material-ui/core"
+import { useHistory } from "react-router-dom"
 
 import NameFields from "./NameFields/NameFields"
 import Subjects from "./Subjects/Subjects"
+import { setEdittingTeacherAction } from "../../../redux/actions"
 
 import s from "./EditForm.module.sass"
 
@@ -14,10 +16,11 @@ export default function EditForm(props) {
   const { onSubmit, teacher } = props
   const institutionId = useSelector(state => state.institution.current._id)
   const edittingTeacherError = useSelector(state => state.errors.edittingTeacher)
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const initialValues = {
     ...teacher,
-    patronymic: teacher.patronymic === "-" ? "" : teacher.patronymic,
     institutionId,
     subjects: teacher.subjects.map(s => s._id)
   }
@@ -41,6 +44,14 @@ export default function EditForm(props) {
       name: "patronymic",
       label: "Հայրանուն"
     }
+  }
+
+  // Hande events
+  const handleReset = e => {
+    // remove editting teacher object from the store
+    dispatch(setEdittingTeacherAction(null))
+
+    history.push("/teachers")
   }
 
   // View
@@ -67,14 +78,18 @@ export default function EditForm(props) {
               {edittingTeacherError}
             </Typography>
           )}
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            color="primary"
-            disabled={formik.isSubmitting || formik.dirty === false}>
-            Հաստատել
-          </Button>
+          <div className={s.buttons}>
+            <Button variant="contained" color="secondary" type="reset" onClick={handleReset}>
+              ՉԵՂԱՐԿԵԼ
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={formik.isSubmitting || formik.dirty === false}>
+              ՀԱՍՏԱՏԵԼ
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

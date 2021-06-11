@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Switch, Route } from "react-router-dom"
 
 import Header from "../../components/Header/Header"
@@ -12,6 +13,13 @@ const menuItems = [
 ]
 
 export default function Teachers(props) {
+  // Lifecycle
+  useEffect(() => {
+    document.title = "Ուսուցիչներ"
+
+    return () => (document.title = "Myiver")
+  }, [])
+
   // View
   return (
     <div className={s.Teachers}>
