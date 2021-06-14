@@ -1,13 +1,8 @@
 import { useEffect, forwardRef } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Dialog from "@material-ui/core/Dialog"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import IconButton from "@material-ui/core/IconButton"
-import Typography from "@material-ui/core/Typography"
-import CloseIcon from "@material-ui/icons/Close"
-import Slide from "@material-ui/core/Slide"
 import { useSelector, useDispatch } from "react-redux"
+import { makeStyles } from "@material-ui/core/styles"
+import CloseIcon from "@material-ui/icons/Close"
+import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide, Divider } from "@material-ui/core"
 
 import Loader from "./Loader/Loader"
 import { setPresentedTeacherAction } from "../../../../redux/actions"
@@ -72,6 +67,20 @@ export default function PresentedTeacher(props) {
               {presentedTeacher.firstName} {presentedTeacher.lastName}{" "}
               {presentedTeacher.patronymic || ""}
             </Typography>
+            <Divider variant="middle" />
+          </div>
+
+          <div className={s.subjects}>
+            <Typography variant="h5">Առարկաներ</Typography>
+
+            <ul>
+              {presentedTeacher.subjects.map((s, i) => (
+                <li key={i}>
+                  <Typography variant="body1">{s.key}</Typography>
+                </li>
+              ))}
+            </ul>
+            <Divider variant="middle" />
           </div>
         </div>
       ) : (
