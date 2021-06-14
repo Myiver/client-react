@@ -7,7 +7,11 @@ import Header from "../../components/Header/Header"
 import Loader from "../../components/Loader/Loader"
 import EditForm from "./EditForm/EditForm"
 import { getAllSubjects, getEdittingTeacher, refreshTeachersList } from "../../redux/middlewares"
-import { setEdittingTeacherErrorAction, setEdittingTeacherAction } from "../../redux/actions"
+import {
+  setEdittingTeacherErrorAction,
+  setEdittingTeacherAction,
+  openAlertAction
+} from "../../redux/actions"
 import { DB_Link } from "../../configs"
 
 import s from "./EditTeacher.module.sass"
@@ -15,12 +19,15 @@ import s from "./EditTeacher.module.sass"
 export default function EditTeacher(props) {
   // Data
   const { id } = useParams()
+  const dispatch = useDispatch()
+  const history = useHistory()
+
   const [loading, setLoading] = useState(true)
+
   const teacher = useSelector(state => state.teachers.editting)
   const subjects = useSelector(state => state.subjects.all)
   const institutionId = useSelector(state => state.institution.current._id)
-  const dispatch = useDispatch()
-  const history = useHistory()
+
   const teacherFullName = teacher
     ? `${teacher.firstName} ${teacher.lastName} ${teacher.patronymic}`
     : "- - -"
@@ -66,6 +73,9 @@ export default function EditTeacher(props) {
 
       history.push("/teachers")
       dispatch(setEdittingTeacherAction(null))
+      // show alert
+      dispatch(openAlertAction("Պատրաստ է"))
+
       form.resetForm()
     } catch ({ message }) {
       setEdittingTeacherErrorAction(message)

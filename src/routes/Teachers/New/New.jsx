@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 
 import { getAllSubjects, refreshTeachersList } from "../../../redux/middlewares"
-import { setNewTeacherErrorAction } from "../../../redux/actions"
+import { setNewTeacherErrorAction, openAlertAction } from "../../../redux/actions"
 import Loader from "../../../components/Loader/Loader"
 import NewTeacherForm from "./NewTeacherForm/NewTeacherForm"
 import { DB_Link } from "../../../configs"
@@ -35,6 +35,8 @@ export default function New(props) {
     } else {
       dispatch(setNewTeacherErrorAction(null))
       dispatch(refreshTeachersList(institutionId))
+      // show alert
+      dispatch(openAlertAction("Պատրաստ է"))
     }
 
     form.resetForm()

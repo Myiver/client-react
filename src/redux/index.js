@@ -8,7 +8,8 @@ const rootReducer = combineReducers({
   institution: reducers.institutionReducer,
   errors: reducers.errorsReducer,
   subjects: reducers.subjectsReducer,
-  teachers: reducers.teachersReducer
+  teachers: reducers.teachersReducer,
+  alert: reducers.alertReducer
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

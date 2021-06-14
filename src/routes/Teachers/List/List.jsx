@@ -19,7 +19,7 @@ import OptionsBtnGroup from "./OptionsBtnGroup/OptionsBtnGroup"
 import Modal from "../../../components/Modal/Modal"
 import PresentedTeacher from "./PresentedTeacher/PresentedTeacher"
 import { refreshTeachersList } from "../../../redux/middlewares"
-import { setPresentedTeacherAction } from "../../../redux/actions"
+import { setPresentedTeacherAction, openAlertAction } from "../../../redux/actions"
 import { compareObjects } from "../../../utils/sortArrayOfObjects"
 import { DB_Link } from "../../../configs"
 
@@ -101,6 +101,8 @@ export default function List(props) {
     } finally {
       setDeletingTeacherId(null)
       toggleDeleteModal()
+      // show alert
+      dispatch(openAlertAction("Ջնջված է"))
     }
   }
 

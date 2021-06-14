@@ -17,3 +17,7 @@ export const refreshTeachersListAction = payload => ({ type: types.REFRESH_LIST,
 export const getEdittingTeacherAction = payload => ({ type: types.GET_EDITING_TEACHER, payload })
 export const setEdittingTeacherAction = payload => ({ type: types.SET_EDITTING_TEACHER, payload })
 export const setPresentedTeacherAction = payload => ({ type: types.SET_PRESENTED_TEACHER, payload })
+
+// ALERT
+export const openAlertAction = payload => ({ type: types.OPEN_ALERT, payload })
+export const closeAlertAction = payload => ({ type: types.CLOSE_ALERT, payload })

@@ -1,4 +1,5 @@
 import { useEffect, forwardRef } from "react"
+import PropTypes from "prop-types"
 import { useSelector, useDispatch } from "react-redux"
 import { makeStyles } from "@material-ui/core/styles"
 import CloseIcon from "@material-ui/icons/Close"
@@ -88,4 +89,10 @@ export default function PresentedTeacher(props) {
       )}
     </Dialog>
   )
+}
+
+PresentedTeacher.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired
 }

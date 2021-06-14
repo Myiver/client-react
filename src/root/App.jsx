@@ -10,16 +10,19 @@ import Teachers from "../routes/Teachers/Teachers"
 import EditTeacher from "../routes/EditTeacher/EditTeacher"
 import Navigator from "../components/Navigator/Navigator"
 import Loader from "../components/Loader/Loader"
+import Alert from "../components/Alert"
 import { verifyToken } from "../redux/middlewares"
 
 import s from "./App.module.sass"
 
 export default function App(props) {
   // Data
-  const [loading, setLoading] = useState(true)
   const history = useHistory()
   const location = useLocation()
   const dispatch = useDispatch()
+
+  const [loading, setLoading] = useState(true)
+
   const isAuth = useSelector(state => state.institution.isAuth)
 
   // Lifecycles
@@ -34,31 +37,35 @@ export default function App(props) {
 
   // View
   return (
-    <div className={s.App}>
-      {isAuth ? (
-        <Grid container spacing={0}>
-          <Grid item xs={3} lg={2}>
-            <Navigator />
-          </Grid>
+    <>
+      <div className={s.App}>
+        {isAuth ? (
+          <Grid container spacing={0}>
+            <Grid item xs={3} lg={2}>
+              <Navigator />
+            </Grid>
 
-          <Grid item xs={9} lg={10}>
-            <Switch>
-              <Route exact path="/" render={props => <Homepage {...props} />} />
-              <Route path="/groups" render={props => <Groups {...props} />} />
-              <Route path="/teachers" render={props => <Teachers {...props} />} />
-              <Route path="/edit-teacher/:id" render={props => <EditTeacher {...props} />} />
-              <Redirect to="/" />
-            </Switch>
+            <Grid item xs={9} lg={10}>
+              <Switch>
+                <Route exact path="/" render={props => <Homepage {...props} />} />
+                <Route path="/groups" render={props => <Groups {...props} />} />
+                <Route path="/teachers" render={props => <Teachers {...props} />} />
+                <Route path="/edit-teacher/:id" render={props => <EditTeacher {...props} />} />
+                <Redirect to="/" />
+              </Switch>
+            </Grid>
           </Grid>
-        </Grid>
-      ) : loading ? (
-        <Loader />
-      ) : (
-        <Switch>
-          <Route path="/login" render={props => <LoginPage {...props} />} />
-          <Redirect to="/login" />
-        </Switch>
-      )}
-    </div>
+        ) : loading ? (
+          <Loader />
+        ) : (
+          <Switch>
+            <Route path="/login" render={props => <LoginPage {...props} />} />
+            <Redirect to="/login" />
+          </Switch>
+        )}
+      </div>
+
+      <Alert />
+    </>
   )
 }
